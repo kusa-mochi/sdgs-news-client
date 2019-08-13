@@ -37,7 +37,9 @@ export default {
       }
 
       &-goals {
-        max-width: 200px;
+        width: 11%;
+        min-width: 85px;
+        max-width: 141px;
       }
 
       &-date {

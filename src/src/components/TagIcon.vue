@@ -1,6 +1,7 @@
 <template>
   <div class="icon-container" v-bind:style="containerStyle" v-bind:title="toolTipMessage">
-    <div class="icon">{{tagNumber}}</div>
+    <div class="icon" v-bind:style="tooltipStyle">{{tagNumber}}</div>
+    <div class="tooltip" v-bind:style="tooltipStyle">{{toolTipMessage}}</div>
   </div>
 </template>
 
@@ -60,6 +61,23 @@ export default {
         borderRadius: this.size / 2 + "px"
       };
     },
+    tooltipStyle() {
+      let textColor = '';
+      switch(this.tagNumber) {
+        case 7:
+        case 11:
+        case 15:
+          textColor = 'black';
+          break;
+        default:
+          textColor = 'white';
+          break;
+      }
+      return {
+        backgroundColor: this.tagColors[this.tagNumber - 1],
+        color: textColor
+      };
+    },
     toolTipMessage() {
       return this.toolTips[this.tagNumber - 1];
     }
@@ -79,6 +97,25 @@ export default {
     .icon {
         font-size: 14px;
         color: white;
+    }
+
+    .tooltip {
+      position: absolute;
+      top: -20px;
+      left: -16px;
+      width: 180px;
+      height: auto;
+      padding: 4px;
+      border-radius: 4px;
+      font-size: 14px;
+      display: none;
+      pointer-events: none;
+    }
+
+    &:hover {
+      .tooltip {
+        display: block;
+      }
     }
 }
 </style>

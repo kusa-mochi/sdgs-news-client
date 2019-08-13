@@ -51,9 +51,20 @@ export default {
 .news-item-container {
   min-height: 72px;
 
-  .title-container {
+  td {
     position: relative;
+    padding: 0;
+    border-style: dotted;
+    border-color: gray;
+    border-width: 0 0 1px 0;
+  }
+
+  .title-container {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
     min-height: 2.5em;
 
     display: flex;
@@ -72,11 +83,11 @@ export default {
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: #aaaaee;
+      background-color: rgb(22,150,50);
       opacity: 0;
 
       &:hover {
-        opacity: 0.4;
+        opacity: 0.15;
       }
     }
   }
