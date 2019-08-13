@@ -7,37 +7,44 @@
 
 <script>
 import NewsTable from "./components/NewsTable.vue";
+import axios from "axios";
 
 export default {
   name: "app",
   data() {
     return {
       taggedOnly: true,
-      newsList: [
-        {
-          id: 1,
-          title: "ULAが5機目となる米空軍の機密通信衛星を打ち上げ",
-          url: "https://www.google.com",
-          tags: [1, 3, 5, 7, 9, 11, 13, 15, 17],
-          date: "2019/08/11 21:45"
-        },
-        {
-          id: 2,
-          title:
-            "「経験ない暑さ」、オープンウオーターの五輪プレ大会で選手から懸念",
-          url: "https://www.google.com",
-          tags: [1, 3, 5, 7, 9, 11, 13, 15, 17],
-          date: "2019/08/11 21:45"
-        },
-        {
-          id: 3,
-          title: "リビア首都攻防戦が3日間停戦に、イスラム教の祭日「犠牲祭」で",
-          url: "https://www.google.com",
-          tags: [2, 4, 6, 8, 10, 12, 14, 16],
-          date: "2019/08/11 21:45"
-        }
-      ]
+      newsListUrl: "https://slash-mochi.net/sdgs_news_list/collect_news_async",
+      newsList: []
     };
+  },
+  methods: {
+    GetTagList(sdgFlags) {
+      let output = [];
+      const sdgFlagsArray = sdgFlags.split('');
+      for(let iGoal = 1; iGoal <= 17; iGoal++) {
+        if(sdgFlagsArray[iGoal - 1] == '1') {
+          output.push(iGoal);
+        }
+      }
+
+      return output;
+    }
+  },
+  mounted() {
+    axios.get(this.newsListUrl).then(res => {
+      this.newsList = res.data;
+      const nData = res.data.length;
+      for(let iData = 0; iData < nData; iData++) {
+        this.newsList.push({
+          date: res.data[iData].date,
+          id: res.data[iData].id,
+          title: res.data[iData].title,
+          url: res.data[iData].link,
+          tags: this.GetTagList(res.data[iData].sdg_flags)
+        });
+      }
+    });
   },
   components: {
     NewsTable

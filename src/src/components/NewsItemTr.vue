@@ -5,7 +5,7 @@
         <div class="title">
           <slot></slot>
         </div>
-        <a href="url"></a>
+        <a v-bind:href="url" target="_blank"></a>
       </div>
     </td>
     <td>
@@ -60,9 +60,6 @@ export default {
   }
 
   .title-container {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     min-height: 2.5em;
@@ -101,6 +98,7 @@ export default {
   }
 
   .date-container {
+    height: 40px;
     font-size: 12px;
     text-align: center;
   }
