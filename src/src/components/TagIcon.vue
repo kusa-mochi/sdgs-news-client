@@ -86,7 +86,6 @@ export default {
 
 <style lang="scss" scoped>
 .icon-container {
-    font-weight: bold;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -95,6 +94,7 @@ export default {
 
     .icon {
         font-size: 14px;
+        font-weight: bold;
         color: white;
     }
 
