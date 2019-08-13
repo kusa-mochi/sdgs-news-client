@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <input type="checkbox" name="TaggedOnly" v-model="taggedOnly" />SDGsに対応するニュースのみ表示する。
+    <input type="checkbox" name="TaggedOnly" v-model="taggedOnly" v-on:change="Reload" />SDGsに対応するニュースのみ表示する。
     <news-table v-bind:news-data="newsList"></news-table>
   </div>
 </template>
@@ -21,30 +21,36 @@ export default {
   methods: {
     GetTagList(sdgFlags) {
       let output = [];
-      const sdgFlagsArray = sdgFlags.split('');
-      for(let iGoal = 1; iGoal <= 17; iGoal++) {
-        if(sdgFlagsArray[iGoal - 1] == '1') {
+      const sdgFlagsArray = sdgFlags.split("");
+      for (let iGoal = 1; iGoal <= 17; iGoal++) {
+        if (sdgFlagsArray[iGoal - 1] == "1") {
           output.push(iGoal);
         }
       }
 
       return output;
+    },
+    Reload() {
+      axios.get(this.newsListUrl).then(res => {
+        this.newsList = [];
+        const nData = res.data.length;
+        for (let iData = 0; iData < nData; iData++) {
+          // SDGsに対応するニュースのみ表示するモード，かつ，iData番目のニュースがSDGsに対応していない場合
+          if(this.taggedOnly && !res.data[iData].sdg_flags.match(/1/)) continue;
+
+          this.newsList.push({
+            date: res.data[iData].date,
+            id: res.data[iData].id,
+            title: res.data[iData].title,
+            url: res.data[iData].link,
+            tags: this.GetTagList(res.data[iData].sdg_flags)
+          });
+        }
+      });
     }
   },
   mounted() {
-    axios.get(this.newsListUrl).then(res => {
-      this.newsList = res.data;
-      const nData = res.data.length;
-      for(let iData = 0; iData < nData; iData++) {
-        this.newsList.push({
-          date: res.data[iData].date,
-          id: res.data[iData].id,
-          title: res.data[iData].title,
-          url: res.data[iData].link,
-          tags: this.GetTagList(res.data[iData].sdg_flags)
-        });
-      }
-    });
+    this.Reload();
   },
   components: {
     NewsTable
