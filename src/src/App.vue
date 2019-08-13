@@ -1,12 +1,16 @@
 <template>
   <div id="app">
     <input type="checkbox" name="TaggedOnly" v-model="taggedOnly" v-on:change="Reload" />SDGsに対応するニュースのみ表示する。
-    <news-table v-bind:news-data="newsList"></news-table>
+    <div v-if="loading" class="loader-container">
+      <mochi-loader></mochi-loader>
+    </div>
+    <news-table v-else v-bind:news-data="newsList"></news-table>
   </div>
 </template>
 
 <script>
 import NewsTable from "./components/NewsTable.vue";
+import MochiLoader from "./components/MochiLoader.vue";
 import axios from "axios";
 
 export default {
@@ -14,6 +18,7 @@ export default {
   data() {
     return {
       taggedOnly: true,
+      loading: true,
       newsListUrl: "https://slash-mochi.net/sdgs_news_list/collect_news_async",
       newsList: []
     };
@@ -31,12 +36,16 @@ export default {
       return output;
     },
     Reload() {
+
+      this.loading = true;
+
       axios.get(this.newsListUrl).then(res => {
         this.newsList = [];
         const nData = res.data.length;
         for (let iData = 0; iData < nData; iData++) {
           // SDGsに対応するニュースのみ表示するモード，かつ，iData番目のニュースがSDGsに対応していない場合
-          if(this.taggedOnly && !res.data[iData].sdg_flags.match(/1/)) continue;
+          if (this.taggedOnly && !res.data[iData].sdg_flags.match(/1/))
+            continue;
 
           this.newsList.push({
             date: res.data[iData].date,
@@ -46,6 +55,8 @@ export default {
             tags: this.GetTagList(res.data[iData].sdg_flags)
           });
         }
+
+        this.loading = false;
       });
     }
   },
@@ -53,10 +64,16 @@ export default {
     this.Reload();
   },
   components: {
-    NewsTable
+    NewsTable,
+    MochiLoader
   }
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.loader-container {
+  width: 100%;
+  height: 48px;
+  overflow: hidden;
+}
 </style>
