@@ -33,7 +33,10 @@ export default {
     background-color: #dddddd;
 
     .col {
-      &-title {
+      &-title,
+      &-goals,
+      &-date {
+        padding: 8px;
       }
 
       &-goals {
@@ -43,7 +46,7 @@ export default {
       }
 
       &-date {
-        width: 130px;
+        width: 80px;
       }
     }
   }
