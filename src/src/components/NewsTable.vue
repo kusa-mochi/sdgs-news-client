@@ -26,11 +26,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$mochi_color: rgb(22, 150, 50);
+
 .root {
   border-spacing: 0;
 
   .head-tr {
-    background-color: #dddddd;
+    background-color: $mochi_color;
+    color: white;
 
     .col {
       &-title,
