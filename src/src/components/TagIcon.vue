@@ -114,6 +114,7 @@ export default {
     &:hover {
       .tooltip {
         display: block;
+        z-index: 10
       }
     }
 }
