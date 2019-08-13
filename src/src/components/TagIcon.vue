@@ -66,7 +66,6 @@ export default {
       switch(this.tagNumber) {
         case 7:
         case 11:
-        case 15:
           textColor = 'black';
           break;
         default:
