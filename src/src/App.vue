@@ -36,7 +36,6 @@ export default {
       return output;
     },
     Reload() {
-
       this.loading = true;
 
       axios.get(this.newsListUrl).then(res => {
@@ -74,6 +73,14 @@ export default {
 .loader-container {
   width: 100%;
   height: 48px;
+  margin-top: 80px;
+  margin-bottom: 80px;
   overflow: hidden;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
 }
 </style>
