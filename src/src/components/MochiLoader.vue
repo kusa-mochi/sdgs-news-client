@@ -11,7 +11,7 @@ export default {
 <style lang="scss" scoped>
 $mochi_color: rgb(22, 150, 50);
 $mochi_border_color: rgba(22, 150, 50, 0.2);
-$border_width: 8px;
+$border_width: 6px;
 $size: 32px;
 
 .loader,
