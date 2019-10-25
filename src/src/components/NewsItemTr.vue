@@ -82,6 +82,7 @@ export default {
       height: 100%;
       background-color: rgb(22,150,50);
       opacity: 0;
+      transition: none;
 
       &:hover {
         opacity: 0.15;
