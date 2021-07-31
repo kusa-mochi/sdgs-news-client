@@ -56,6 +56,8 @@ export default {
         }
 
         this.loading = false;
+
+        postMessage(document.body.scrollHeight, 'https://slash-mochi.net/?p=1169');
       });
     }
   },
